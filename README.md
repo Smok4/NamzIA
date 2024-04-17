@@ -1,0 +1,2 @@
+# NamzIA
+AI for Investing
