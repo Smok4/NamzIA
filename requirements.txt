@@ -1,0 +1,5 @@
+tensorflow>=2.0.0
+gym>=0.18.3
+numpy>=1.21.3
+pycosmos>=0.1.0
+requests>=2.26.0
