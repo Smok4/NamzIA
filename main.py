@@ -1,49 +1,41 @@
-from coinbase.wallet.client import Client
-import gym
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
-import requests
+from coinbase.wallet.client import Client
+import time
 
-# Remplacez les valeurs suivantes par vos informations d'identification Coinbase
-API_KEY = 'YOUR_API_KEY'
-API_SECRET = 'YOUR_API_SECRET'
+# Initialiser le client Coinbase avec vos informations d'identification
+client = Client("YOUR_API_KEY", "YOUR_API_SECRET")
 
-client = Client(API_KEY, API_SECRET)
+# Fonction pour récupérer le prix actuel du ATOM à partir de Coinbase
+def get_atom_price():
+    atom_price = client.get_buy_price(currency_pair='ATOM-USD')['amount']
+    return float(atom_price)
 
-# Définir l'environnement d'investissement
-class InvestmentEnvironment(gym.Env):
+# Classe pour l'environnement d'investissement
+class InvestmentEnvironment:
     def __init__(self):
-        super(InvestmentEnvironment, self).__init__()
-        self.observation_space = gym.spaces.Discrete(1)
-        self.action_space = gym.spaces.Discrete(2)
-        self.initial_balance = 100
-        self.current_balance = self.initial_balance
-        self.goal_balance = 10000
+        self.atom_price = get_atom_price()
+        self.balance = 1000  # Solde initial en USD
+
+    def get_state(self):
+        return np.array([self.atom_price])
 
     def step(self, action):
-        if action == 0:  # Investir
-            investment_return = np.random.uniform(0, 0.05) * self.current_balance
-            self.current_balance += investment_return
+        # Logique pour effectuer des transactions réelles sur Coinbase
+        pass
 
-        done = self.current_balance >= self.goal_balance
-        reward = self.current_balance - self.initial_balance
-        return 0, reward, done, {}
-
-    def reset(self):
-        self.current_balance = self.initial_balance
-        return 0
-
-# Définir l'agent DQN
+# Classe pour l'agent DQN
 class DQNAgent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
         self.action_size = action_size
+        self.memory = []
+        self.gamma = 0.95  # Facteur de réduction
+        self.epsilon = 1.0  # Exploration initiale
+        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.995
         self.model = self.build_model()
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
-        self.target_model = self.build_model()
-        self.target_update_counter = 0
-        self.update_target_frequency = 100
 
     def build_model(self):
         model = tf.keras.Sequential([
@@ -51,66 +43,68 @@ class DQNAgent:
             layers.Dense(24, activation='relu'),
             layers.Dense(self.action_size, activation='linear')
         ])
-        model.compile(loss='mse', optimizer=self.optimizer)
+        model.compile(loss='mse', optimizer=tf.keras.optimizers.Adam(learning_rate=0.001))
         return model
 
     def act(self, state):
-        return np.argmax(self.model.predict(np.array(state).reshape(1, self.state_size)))
+        if np.random.rand() <= self.epsilon:
+            return np.random.choice(range(self.action_size))
+        act_values = self.model.predict(state)
+        return np.argmax(act_values[0])
 
-    def train(self, replay_buffer, batch_size=32, discount_rate=0.95):
-        batch = replay_buffer.sample(batch_size)
-        states, actions, rewards, next_states, dones = batch
+    def remember(self, state, action, reward, next_state, done):
+        self.memory.append((state, action, reward, next_state, done))
 
-        target_qs = self.target_model.predict(states)
-        next_qs = self.target_model.predict(next_states)
-
-        for i in range(batch_size):
-            if dones[i]:
-                target_qs[i][actions[i]] = rewards[i]
-            else:
-                target_qs[i][actions[i]] = rewards[i] + discount_rate * np.max(next_qs[i])
-
-        self.model.fit(states, target_qs, batch_size=batch_size, verbose=0)
-
-        self.target_update_counter += 1
-        if self.target_update_counter >= self.update_target_frequency:
-            self.target_model.set_weights(self.model.get_weights())
-            self.target_update_counter = 0
+    def train(self, batch_size=32):
+        if len(self.memory) < batch_size:
+            return
+        minibatch = np.random.choice(self.memory, batch_size, replace=False)
+        for state, action, reward, next_state, done in minibatch:
+            target = reward
+            if not done:
+                target = (reward + self.gamma * np.amax(self.model.predict(next_state)[0]))
+            target_f = self.model.predict(state)
+            target_f[0][action] = target
+            self.model.fit(state, target_f, epochs=1, verbose=0)
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
 
 # Paramètres d'apprentissage
 state_size = 1
 action_size = 2
-batch_size = 32
-discount_rate = 0.95
 
 # Créer l'environnement et l'agent
 env = InvestmentEnvironment()
 agent = DQNAgent(state_size, action_size)
 
-# Entraîner l'agent
+# Boucle principale
 num_episodes = 1000
+batch_size = 32
 for episode in range(num_episodes):
-    state = env.reset()
+    state = env.get_state()
     done = False
     while not done:
         action = agent.act(state)
-        next_state, reward, done, _ = env.step(action)
-        agent.train(replay_buffer=None, batch_size=batch_size, discount_rate=discount_rate)
+        next_state, reward, done = env.step(action)
+        agent.remember(state, action, reward, next_state, done)
         state = next_state
+    agent.train(batch_size)
 
     # Envoyer de l'argent à l'adresse de crypto-monnaie après chaque épisode
     # Remplacez `RECIPIENT_ADDRESS` par l'adresse du destinataire et `AMOUNT_TO_SEND` par le montant que vous souhaitez envoyer
     recipient_address = 'RECIPIENT_ADDRESS'
     amount = 'AMOUNT_TO_SEND'
-    currency = 'CURRENCY'
+    currency = 'ATOM'
 
     # Envoyer des fonds à l'adresse du destinataire
     transaction = client.send_money(
-        account.id,
+        'YOUR_ACCOUNT_ID',  # Remplacez par votre identifiant de compte Coinbase
         to=recipient_address,
         amount=amount,
         currency=currency
     )
 
     print(f"Transaction ID : {transaction.id}")
-    print(f"Episode {episode + 1}/{num_episodes}, Total Balance: ${env.current_balance:.2f}")
+    print(f"Episode {episode + 1}/{num_episodes}, Total Balance: ${env.balance:.2f}")
+
+    time.sleep(3600)  # Attendre 1 heure avant de vérifier à nouveau le prix du ATOM
