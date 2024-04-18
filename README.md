@@ -51,7 +51,8 @@ Dans le cadre du développement futur, nous prévoyons d'ajouter les fonctionnal
 ## Contributions
 
 Les contributions au projet sont les bienvenues ! Vous pouvez contribuer en proposant des améliorations, en signalant des problèmes ou en ouvrant des pull requests.
-Donation pour les âmes charitable voulant aidé financièrement le projet
+Donation pour les âmes charitable voulant aidé financièrement le projet (OSMOSIS) :  osmo1t6q4jm2sgusjm2j26k79gugyfqlw0qu9p66dwc
+
 ## Auteur
 
 Namz
