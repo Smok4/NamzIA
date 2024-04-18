@@ -51,7 +51,7 @@ Dans le cadre du développement futur, nous prévoyons d'ajouter les fonctionnal
 ## Contributions
 
 Les contributions au projet sont les bienvenues ! Vous pouvez contribuer en proposant des améliorations, en signalant des problèmes ou en ouvrant des pull requests.
-
+Donation pour les âmes charitable voulant aidé financièrement le projet
 ## Auteur
 
 Namz
