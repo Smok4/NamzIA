@@ -1,6 +1,4 @@
-Voici une présentation de projet pour GitHub :
 
----
 
 # Agent d'Investissement Intelligent
 
