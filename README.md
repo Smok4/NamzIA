@@ -74,6 +74,7 @@ Notez que chaque devise aura son propre ID de compte. Assurez-vous de copier l'I
 
 Les contributions au projet sont les bienvenues ! Vous pouvez contribuer en proposant des améliorations, en signalant des problèmes ou en ouvrant des pull requests.
 Donation pour les âmes charitable voulant aidé financièrement le projet (OSMOSIS) :  osmo1t6q4jm2sgusjm2j26k79gugyfqlw0qu9p66dwc
+Discord : https://discord.com/channels/625089252245635112/1230353028935323709
 
 ## Auteur
 
