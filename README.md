@@ -1,41 +1,38 @@
-# Projet d'IA d'Investissement
+Voici une présentation de projet pour GitHub :
 
-Ce projet vise à développer une intelligence artificielle (IA) capable de prendre des décisions d'investissement intelligentes dans un environnement simulé. L'IA utilise des techniques d'apprentissage par renforcement avancées pour maximiser ses gains financiers et envoie périodiquement ses gains à une adresse de crypto-monnaie spécifique.
+---
+
+# Agent d'Investissement Intelligent
+
+Ce projet consiste en un agent d'investissement intelligent qui prend des décisions d'achat et de vente de crypto-monnaies en fonction des fluctuations du marché. L'agent utilise l'apprentissage par renforcement pour apprendre à maximiser les bénéfices tout en minimisant les pertes.
+
+## Objectif
+
+L'objectif principal de ce projet est de développer un système d'investissement automatisé capable de prendre des décisions éclairées sur les transactions de crypto-monnaies. L'agent doit être capable d'apprendre et d'adapter ses stratégies en fonction des changements du marché.
 
 ## Fonctionnalités
 
-- Utilisation de l'algorithme Deep Q-Network (DQN) pour l'apprentissage par renforcement.
-- Interaction avec un environnement d'investissement simulé.
-- Envoi de gains financiers à une adresse de crypto-monnaie spécifique à l'aide d'une API de service tiers.
+- Surveillance en temps réel du prix des crypto-monnaies à partir de sources telles que CoinMarketCap.
+- Prise de décision d'achat et de vente basée sur des seuils prédéfinis et des stratégies d'investissement.
+- Utilisation de l'apprentissage par renforcement pour améliorer les performances de l'agent au fil du temps.
+- Intégration avec l'API Coinbase pour effectuer des transactions réelles sur le marché.
 
-## Comment ça marche
+## Architecture
 
-L'IA est représentée par un agent qui interagit avec un environnement d'investissement simulé. À chaque étape, l'agent choisit une action (investir ou ne pas investir) en fonction de son estimation actuelle des valeurs Q, qui représentent les récompenses attendues pour chaque action dans chaque état. L'agent est entraîné sur plusieurs épisodes d'interaction avec l'environnement pour améliorer ses décisions d'investissement au fil du temps.
+Le projet est construit autour de plusieurs composants principaux :
 
-Après chaque épisode, l'IA envoie le solde financier actuel à une adresse de crypto-monnaie spécifique à l'aide d'une fonction `send_money_to_address`. Cette fonction simule l'envoi de crypto-monnaie à l'aide d'une API de service tiers.
+1. **Environnement d'Investissement :** Simule le marché des crypto-monnaies et fournit des informations sur les prix et les actions à prendre.
+2. **Agent d'Investissement :** Utilise un réseau neuronal pour prendre des décisions d'achat et de vente en fonction des observations de l'environnement.
+3. **Intégration Coinbase :** Utilise l'API Coinbase pour effectuer des transactions réelles sur le marché.
 
-## Configuration requise
+## Développement Futur
 
-- Python 3.x
-- TensorFlow
-- Gym
+Dans le cadre du développement futur, nous prévoyons d'ajouter les fonctionnalités suivantes :
 
-## Utilisation
+- Amélioration de la précision des prédictions en utilisant des modèles d'apprentissage plus avancés.
+- Intégration avec d'autres plateformes d'échange de crypto-monnaies pour une plus grande diversification des transactions.
+- Implémentation de mécanismes de gestion des risques pour minimiser les pertes potentielles.
 
-1. Cloner ce dépôt sur votre machine locale.
-2. Installer les dépendances requises : `pip install -r requirements.txt`.
-3. Exécuter le script principal : `python main.py`.
-
-## Mise à jour
-
-du 18/04/2024
-
-J'ai ajouté l'import de la bibliothèque Coinbase Python.
-Vous devez remplacer "YOUR_API_KEY" et "YOUR_API_SECRET" par votre clé d'API et votre secret d'API Coinbase respectivement.
-La fonction send_crypto_to_address envoie des crypto-monnaies à une adresse spécifiée.
-Dans la méthode step de l'environnement d'investissement, j'ai ajouté la logique pour acheter et vendre des ATOM en utilisant l'API Coinbase.
-
----
 
 ## Comment trouver votre API Key et API Secret sur Coinbase
 
@@ -53,7 +50,9 @@ Dans la méthode step de l'environnement d'investissement, j'ai ajouté la logiq
 
 ---
 
-N'oubliez pas de remplacer les instructions génériques par des captures d'écran ou des exemples spécifiques si vous le jugez nécessaire pour rendre le tutoriel plus clair pour vos utilisateurs.
+## Contributions
+
+Les contributions au projet sont les bienvenues ! Vous pouvez contribuer en proposant des améliorations, en signalant des problèmes ou en ouvrant des pull requests.
 
 ## Auteur
 
