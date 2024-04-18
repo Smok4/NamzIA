@@ -1,9 +1,15 @@
+from coinbase.wallet.client import Client
 import gym
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 import requests
-import pycosmos
+
+# Remplacez les valeurs suivantes par vos informations d'identification Coinbase
+API_KEY = 'YOUR_API_KEY'
+API_SECRET = 'YOUR_API_SECRET'
+
+client = Client(API_KEY, API_SECRET)
 
 # Définir l'environnement d'investissement
 class InvestmentEnvironment(gym.Env):
@@ -11,7 +17,7 @@ class InvestmentEnvironment(gym.Env):
         super(InvestmentEnvironment, self).__init__()
         self.observation_space = gym.spaces.Discrete(1)
         self.action_space = gym.spaces.Discrete(2)
-        self.initial_balance = 1000
+        self.initial_balance = 100
         self.current_balance = self.initial_balance
         self.goal_balance = 10000
 
@@ -71,15 +77,6 @@ class DQNAgent:
             self.target_model.set_weights(self.model.get_weights())
             self.target_update_counter = 0
 
-# Fonction pour envoyer de la crypto-monnaie à une adresse spécifique
-def send_money_to_address(address, amount):
-    # Simuler l'envoi de crypto-monnaie à l'aide d'une API de service tiers
-    response = requests.post("https://api.example.com/send_money", json={"address": address, "amount": amount})
-    if response.status_code == 200:
-        print("Transaction réussie!")
-    else:
-        print("Échec de la transaction.")
-
 # Paramètres d'apprentissage
 state_size = 1
 action_size = 2
@@ -102,7 +99,18 @@ for episode in range(num_episodes):
         state = next_state
 
     # Envoyer de l'argent à l'adresse de crypto-monnaie après chaque épisode
-    address = "YOURWALLET"  # Adresse de réception des jetons ATOM
-    amount = env.current_balance  # Envoyer tout le solde actuel
-    send_money_to_address(address, amount)
+    # Remplacez `RECIPIENT_ADDRESS` par l'adresse du destinataire et `AMOUNT_TO_SEND` par le montant que vous souhaitez envoyer
+    recipient_address = 'RECIPIENT_ADDRESS'
+    amount = 'AMOUNT_TO_SEND'
+    currency = 'CURRENCY'
+
+    # Envoyer des fonds à l'adresse du destinataire
+    transaction = client.send_money(
+        account.id,
+        to=recipient_address,
+        amount=amount,
+        currency=currency
+    )
+
+    print(f"Transaction ID : {transaction.id}")
     print(f"Episode {episode + 1}/{num_episodes}, Total Balance: ${env.current_balance:.2f}")
