@@ -26,6 +26,26 @@ Après chaque épisode, l'IA envoie le solde financier actuel à une adresse de 
 2. Installer les dépendances requises : `pip install -r requirements.txt`.
 3. Exécuter le script principal : `python main.py`.
 
+---
+
+## Comment trouver votre API Key et API Secret sur Coinbase
+
+1. Connectez-vous à votre compte Coinbase sur [coinbase.com](https://www.coinbase.com/).
+
+2. Dans le menu de navigation, cliquez sur votre profil dans le coin supérieur droit, puis sélectionnez "API".
+
+3. Si vous n'avez pas encore créé de clé API, cliquez sur "Créer une clé API". Sinon, vous verrez une liste de vos clés API existantes.
+
+4. Pour créer une nouvelle clé API, cliquez sur "Nouvelle clé API" et suivez les étapes pour configurer vos autorisations et vos paramètres de sécurité. Vous devrez peut-être fournir votre mot de passe Coinbase pour confirmer la création de la clé API.
+
+5. Une fois que votre clé API est créée, vous verrez votre clé API et votre secret API. **Notez bien votre secret API car il ne sera affiché qu'une seule fois.** Assurez-vous de le copier dans un endroit sûr et ne le partagez avec personne.
+
+6. Vous pouvez maintenant utiliser votre clé API et votre secret API dans votre application ou votre projet.
+
+---
+
+N'oubliez pas de remplacer les instructions génériques par des captures d'écran ou des exemples spécifiques si vous le jugez nécessaire pour rendre le tutoriel plus clair pour vos utilisateurs.
+
 ## Auteur
 
 Namz
