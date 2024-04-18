@@ -19,7 +19,7 @@ L'objectif principal de ce projet est de développer un système d'investissemen
 
 Le projet est construit autour de plusieurs composants principaux :
 
-1. **Environnement d'Investissement :** Simule le marché des crypto-monnaies et fournit des informations sur les prix et les actions à prendre.
+1. **Environnement d'Investissement :** L'IA est sur le marché des crypto-monnaies grace à Coinbase et fournit des informations sur les prix et les actions à prendre.
 2. **Agent d'Investissement :** Utilise un réseau neuronal pour prendre des décisions d'achat et de vente en fonction des observations de l'environnement.
 3. **Intégration Coinbase :** Utilise l'API Coinbase pour effectuer des transactions réelles sur le marché.
 
