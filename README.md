@@ -34,7 +34,7 @@ Dans le cadre du développement futur, nous prévoyons d'ajouter les fonctionnal
 
 ## Comment trouver votre API Key et API Secret sur Coinbase
 
-1. Connectez-vous à votre compte Coinbase sur [coinbase.com]((https://portal.cloud.coinbase.com/)).
+1. Connectez-vous à votre compte Coinbase sur [https://portal.cloud.coinbase.com/]((https://portal.cloud.coinbase.com/)).
 
 2. Dans le menu de navigation, cliquez sur votre profil dans le coin supérieur droit, puis sélectionnez "API".
 
