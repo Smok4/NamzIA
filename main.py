@@ -15,15 +15,24 @@ def get_atom_price():
 # Classe pour l'environnement d'investissement
 class InvestmentEnvironment:
     def __init__(self):
-        self.atom_price = get_atom_price()
-        self.balance = 1000  # Solde initial en USD
+        self.balance = float(client.get_account('YOUR_ACCOUNT_ID').balance.amount)  # Solde initial en USD
 
     def get_state(self):
-        return np.array([self.atom_price])
+        return np.array([get_atom_price()])
 
     def step(self, action):
         # Logique pour effectuer des transactions réelles sur Coinbase
-        pass
+        current_balance = float(client.get_account('YOUR_ACCOUNT_ID').balance.amount)
+        atom_price = get_atom_price()
+        
+        if action == 0:  # Acheter
+            amount_to_buy = min(100, current_balance / atom_price)  # Acheter pour un maximum de 100 USD
+            client.buy('ATOM-USD', amount=amount_to_buy)
+        elif action == 1:  # Vendre
+            amount_to_sell = min(100, current_balance)  # Vendre un maximum de 100 USD de ATOM
+            client.sell('ATOM-USD', amount=amount_to_sell)
+        
+        time.sleep(5)  # Attendre quelques secondes pour que la transaction se termine
 
 # Classe pour l'agent DQN
 class DQNAgent:
@@ -90,21 +99,6 @@ for episode in range(num_episodes):
         state = next_state
     agent.train(batch_size)
 
-    # Envoyer de l'argent à l'adresse de crypto-monnaie après chaque épisode
-    # Remplacez `RECIPIENT_ADDRESS` par l'adresse du destinataire et `AMOUNT_TO_SEND` par le montant que vous souhaitez envoyer
-    recipient_address = 'RECIPIENT_ADDRESS'
-    amount = 'AMOUNT_TO_SEND'
-    currency = 'ATOM'
-
-    # Envoyer des fonds à l'adresse du destinataire
-    transaction = client.send_money(
-        'YOUR_ACCOUNT_ID',  # Remplacez par votre identifiant de compte Coinbase
-        to=recipient_address,
-        amount=amount,
-        currency=currency
-    )
-
-    print(f"Transaction ID : {transaction.id}")
     print(f"Episode {episode + 1}/{num_episodes}, Total Balance: ${env.balance:.2f}")
 
     time.sleep(3600)  # Attendre 1 heure avant de vérifier à nouveau le prix du ATOM
