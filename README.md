@@ -26,6 +26,15 @@ Après chaque épisode, l'IA envoie le solde financier actuel à une adresse de 
 2. Installer les dépendances requises : `pip install -r requirements.txt`.
 3. Exécuter le script principal : `python main.py`.
 
+## Mise à jour
+
+du 18/04/2024
+
+J'ai ajouté l'import de la bibliothèque Coinbase Python.
+Vous devez remplacer "YOUR_API_KEY" et "YOUR_API_SECRET" par votre clé d'API et votre secret d'API Coinbase respectivement.
+La fonction send_crypto_to_address envoie des crypto-monnaies à une adresse spécifiée.
+Dans la méthode step de l'environnement d'investissement, j'ai ajouté la logique pour acheter et vendre des ATOM en utilisant l'API Coinbase.
+
 ---
 
 ## Comment trouver votre API Key et API Secret sur Coinbase
