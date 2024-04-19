@@ -1,0 +1,33 @@
+<!-- templates/control_panel.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Control Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Crypto Control Panel</h1>
+        <p>The best cryptocurrency to invest in right now is: <strong>{{ best_crypto }}</strong></p>
+        <h2>Predictions</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cryptocurrency</th>
+                    <th>Prediction</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for crypto_symbol in crypto_symbols %}
+                <tr>
+                    <td>{{ crypto_symbol }}</td>
+                    <td>{{ predictions[crypto_symbol] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
